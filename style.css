@@ -1,0 +1,403 @@
+
+:root {
+    --primary: #6558e8;
+    --primary-dark: #5143ce;
+    --secondary: #8b5cf6;
+    --background: #f4f5ff;
+    --text: #25243a;
+    --text-light: #85859b;
+    --border: #e7e7f0;
+    --white: #ffffff;
+    --success: #16a36a;
+    --danger: #e05252;
+    --shadow: 0 20px 60px rgba(48, 40, 120, 0.13);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+
+    background:
+        radial-gradient(circle at 10% 20%, #dcd9ff 0, transparent 35%),
+        radial-gradient(circle at 90% 80%, #d9e6ff 0, transparent 35%),
+        var(--background);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px 20px;
+    color: var(--text);
+}
+
+.container {
+    width: 100%;
+    max-width: 490px;
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 26px;
+
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(15px);
+
+    animation: aparecer 0.6s ease;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Cabeçalho */
+
+.header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.icon-money {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 800;
+    letter-spacing: -1px;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: var(--text-light);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Formulário */
+
+.converter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.currency-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.currency-input,
+.currency-select {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* Labels */
+
+label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 9px;
+}
+
+/* Campos */
+
+input,
+select {
+    width: 100%;
+    min-width: 0;
+    height: 52px;
+    padding: 0 14px;
+
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+
+    background: #fafaff;
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 500;
+
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+input::placeholder {
+    color: #aaaabd;
+}
+
+input:hover,
+select:hover {
+    border-color: #c5bfff;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px rgba(101, 88, 232, 0.10);
+}
+
+/* Resultado */
+
+.result-box {
+    display: flex;
+    flex-direction: column;
+}
+
+#result {
+    background: #f0efff;
+    color: var(--primary);
+    font-size: 17px;
+    font-weight: 800;
+    border-color: #dedaff;
+    transition: all 0.3s ease;
+}
+
+#result.result-ready {
+    animation: resultadoAparecer 0.5s ease;
+}
+
+@keyframes resultadoAparecer {
+    from {
+        opacity: 0.3;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Botão */
+
+.convert-btn {
+    width: 100%;
+    min-height: 54px;
+    margin-top: 5px;
+
+    border: none;
+    border-radius: 13px;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(101, 88, 232, 0.25);
+    transition: all 0.3s ease;
+}
+
+.convert-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(101, 88, 232, 0.35);
+}
+
+.convert-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.convert-btn:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+/* Carregamento */
+
+#loading[hidden] {
+    display: none !important;
+}
+
+#loading:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 20px;
+    border-radius: 14px;
+    background: #f7f5ff;
+
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 600;
+
+    animation: aparecer 0.3s ease;
+}
+
+.spinner {
+    width: 38px;
+    height: 38px;
+
+    border: 4px solid #e6e3ff;
+    border-top-color: var(--primary);
+
+    border-radius: 50%;
+    animation: girar 0.7s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mensagens */
+
+.result-message {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+.result-message.success {
+    color: var(--success);
+    animation: aparecer 0.4s ease;
+}
+
+.result-message.error {
+    color: var(--danger);
+}
+
+/* Rodapé */
+
+.info {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.info p {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.8;
+}
+
+.info a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.info a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+    body {
+        padding: 25px 16px;
+    }
+
+    .container {
+        max-width: 460px;
+        padding: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    .container {
+        padding: 26px 20px;
+        border-radius: 20px;
+    }
+
+    .header {
+        margin-bottom: 26px;
+    }
+
+    .converter-form {
+        gap: 16px;
+    }
+
+    .currency-row {
+        gap: 10px;
+    }
+
+    input,
+    select {
+        height: 48px;
+        padding: 0 10px;
+        font-size: 12px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    .convert-btn {
+        min-height: 50px;
+    }
+}
+
+@media (max-width: 350px) {
+    .container {
+        padding: 22px 14px;
+    }
+
+    .currency-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+/* Acessibilidade */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
